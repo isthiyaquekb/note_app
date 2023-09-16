@@ -1,0 +1,14 @@
+{
+  "appName": "BeesWax",
+  "appCaption1": "Plate-forme de chaîne d'approvisionnement alimentée par la chaîne de blocs",
+  "appCaption2": "Traçabilité intacte",
+  "login": {
+    "caption1": "Koster Keunen",
+    "caption2": "Plate-forme de chaîne d'approvisionnement alimentée par la chaîne de blocs",
+    "label": "Connectez-vous avec votre email et votre mot de passe",
+    "email": "Identifiant de messagerie",
+    "password": "Mot de passe",
+    "login_button": "connexion",
+    "forgot_password": "mot de passe oublié ?"
+  }
+}
