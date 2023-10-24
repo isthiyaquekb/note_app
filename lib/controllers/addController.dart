@@ -1,8 +1,11 @@
 import 'dart:developer';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:note_app/controllers/dashboard_controller.dart';
+import 'package:note_app/core/app_color.dart';
+import 'package:note_app/model/notes_model.dart';
 import 'package:note_app/model/tags_model.dart';
 
 class AddController extends GetxController{
@@ -28,9 +31,12 @@ class AddController extends GetxController{
 
   //LIST
   var tagList = <TagsModel>[].obs;
+  //FIRESTORE DECLARED
+  FirebaseFirestore? firestore;
 
   @override
   void onInit() {
+    firestore = FirebaseFirestore.instance;
     nameController.text = "";
     contentController.text = "";
     tagList.value=[
@@ -70,5 +76,57 @@ class AddController extends GetxController{
     isSelected.value=!selectedTag;
 
     update();
+  }
+
+  //Submitting note
+  void submitNote(){
+    //validation
+    isNameValid = nameKey.currentState!.validate();
+    isContentValid = contentKey.currentState!.validate();
+    Get.focusScope!.unfocus();
+    if (isNameValid && isContentValid) {
+      nameKey.currentState!.save();
+      contentKey.currentState!.save();
+      // Create a list of selected tags
+      List<TagsModel> selectedTagList = tagList.value
+          .where((tag) => tag.isSelectedTag)
+          .toList();
+      createNote(nameController.text, contentController.text,selectedTagList);
+    }
+  }
+
+  void createNote(String title, String content,List<TagsModel> tagList) async {
+    try {
+      log("NAME $title");
+      log("CONTENT $content");
+      log("TAGS $tagList");
+      var noteDate = NotesModel(id: "${DateTime.now().millisecondsSinceEpoch}",title: title, content: content, tags: tagList);
+      log("INSERT INTO FIRE STORE $noteDate");
+
+      await firestore
+          ?.collection("Notes")
+          .add(noteDate.toJson())
+          .whenComplete(() {
+        Get.snackbar(
+          "Success",
+          "Your note has been created",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.shade100,
+          colorText: AppColor.black,
+        );
+        nameController.dispose();
+        contentController.dispose();
+        Get.find<DashboardController>().changeTabIndex(0);
+      });
+    } catch (error, stackTrace) {
+      log("Error $error, $stackTrace");
+      Get.snackbar(
+        "Error",
+        "Something went wrong",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade100,
+        colorText: AppColor.black,
+      );
+    }
   }
 }

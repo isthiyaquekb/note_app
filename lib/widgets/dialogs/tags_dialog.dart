@@ -21,25 +21,28 @@ class TagsDialog extends StatelessWidget {
       insetPadding: EdgeInsets.zero,
       backgroundColor: Colors.transparent,
       child: Container(
+        margin: const EdgeInsets.only(top: 16),
         height: MediaQuery
             .of(context)
             .size
-            .height * 0.75,
+            .height,
         width: MediaQuery
             .of(context)
             .size
             .width * 0.90,
         decoration: BoxDecoration(
-            color: AppColor.white,
             borderRadius: BorderRadius.circular(30),
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.grey, offset: Offset(0.0, 0.4), blurRadius: 2),
-            ]),
+            ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(padding: const EdgeInsets.only(top: 20),onPressed: (){
+                Get.back();
+              }, icon: const Icon(Icons.close,color: Colors.red,)),
+            ),
             Container(
               height: MediaQuery
                   .of(context)

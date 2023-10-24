@@ -43,7 +43,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
-                      child: const Image(image: AssetImage(AppAssets.accountPlaceHolder),),
+                      child: const Image(
+                        image: AssetImage(AppAssets.accountPlaceHolder),
+                      ),
                     ),
                   ),
                   Padding(
@@ -102,208 +104,178 @@ class _HomePageState extends State<HomePage> {
                         controller: homeController.tabController,
                         children: [
                           Stack(children: [
-                            GetBuilder<HomeController>(
-                              builder: (homeController) => PageView.builder(
-                                scrollDirection: Axis.horizontal,
-                                physics: const ClampingScrollPhysics(),
-                                pageSnapping: true,
-                                itemCount: 6,
-                                itemBuilder: (context, index) =>
-                                    AnimatedBuilder(
-                                  animation: homeController.pageController,
-                                  builder: (context, child) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: 320,
-                                        width: 240,
-                                        decoration: BoxDecoration(
-                                            color: AppColor.cardBg,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  color: Colors.black45,
-                                                  offset: Offset(0.4, 0.4),
-                                                  blurRadius: 6.0)
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Stack(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 60.0, left: 16),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                            StreamBuilder(
+                                stream: homeController.getAllNotes(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return PageView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: const ClampingScrollPhysics(),
+                                      pageSnapping: true,
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context, index) =>
+                                          AnimatedBuilder(
+                                        animation:
+                                            homeController.pageController,
+                                        builder: (context, child) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              height: 320,
+                                              width: 240,
+                                              decoration: BoxDecoration(
+                                                  color: AppColor.cardBg,
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        color: Colors.black45,
+                                                        offset:
+                                                            Offset(0.4, 0.4),
+                                                        blurRadius: 6.0)
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: Stack(
                                                 children: [
-                                                  Text(
-                                                      "Instagram Content plan for beginner",style: AppTheme.darkTheme.textTheme.displayLarge,),
                                                   Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 8.0),
-                                                    child: Row(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 60.0,
+                                                            left: 16),
+                                                    child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      8.0),
-                                                          child: Container(
-                                                            height: 30,
-                                                            decoration: BoxDecoration(
-                                                                color: AppColor
-                                                                    .textColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            child: Padding(
-                                                              padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      8.0),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  "#instagram",
-                                                                  style: AppTheme
-                                                                      .darkTheme
-                                                                      .textTheme
-                                                                      .bodySmall,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      8.0),
-                                                          child: Container(
-                                                            height: 30,
-                                                            decoration: BoxDecoration(
-                                                                color: AppColor
-                                                                    .textColor,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10)),
-                                                            child: Padding(
-                                                              padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      8.0),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  "#work",
-                                                                  style: AppTheme
-                                                                      .darkTheme
-                                                                      .textTheme
-                                                                      .bodySmall,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "Instagram Content plan for beginner,Instagram Content plan for beginner,Instagram Content plan for beginner,Instagram Content plan for beginner,Instagram Content plan for beginner,Instagram Content plan for beginner,Instagram Content plan for beginner,Instagram Content plan for beginner",
-                                                    style: AppTheme.darkTheme
-                                                        .textTheme.bodySmall,
-                                                    maxLines: 5,
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 16.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Text(
-                                                          "Today at 6:30 PM",
+                                                          snapshot.data![index].title,
+                                                          style: AppTheme
+                                                              .darkTheme
+                                                              .textTheme
+                                                              .displayLarge,
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical:
+                                                                      8.0),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: snapshot.data![index].tags.asMap().entries.map((e) => Padding(
+                                                              padding: const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                  8.0),
+                                                              child:
+                                                              Container(
+                                                                height: 30,
+                                                                decoration: BoxDecoration(
+                                                                    color: AppColor
+                                                                        .textColor,
+                                                                    borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        10)),
+                                                                child:
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                      horizontal:
+                                                                      8.0),
+                                                                  child:
+                                                                  Center(
+                                                                    child:
+                                                                    Text(
+                                                                      e.value.tagName,
+                                                                      style: AppTheme
+                                                                          .darkTheme
+                                                                          .textTheme
+                                                                          .bodySmall,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),).toList(),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          snapshot.data![index].content,
                                                           style: AppTheme
                                                               .darkTheme
                                                               .textTheme
                                                               .bodySmall,
+                                                          maxLines: 5,
                                                         ),
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
-                                                                  left: 8.0),
-                                                          child: Container(
-                                                            height: 40,
-                                                            width: 40,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20),
-                                                                color: Colors
-                                                                    .black),
-                                                            child: const Center(
-                                                                child: Icon(
-                                                              Icons
-                                                                  .arrow_forward_ios,
-                                                              color:
-                                                                  Colors.white,
-                                                            )),
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      16.0),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                "Today at 6:30 PM",
+                                                                style: AppTheme
+                                                                    .darkTheme
+                                                                    .textTheme
+                                                                    .bodySmall,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            8.0),
+                                                                child:
+                                                                    Container(
+                                                                  height: 40,
+                                                                  width: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                      color: Colors
+                                                                          .black),
+                                                                  child:
+                                                                      const Center(
+                                                                          child:
+                                                                              Icon(
+                                                                    Icons
+                                                                        .arrow_forward_ios,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  )),
+                                                                ),
+                                                              )
+                                                            ],
                                                           ),
-                                                        )
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                            Positioned(
-                                                top: 0,
-                                                right: 0,
-                                                child: Container(
-                                                  height: 60,
-                                                  width: 50,
-                                                  decoration: BoxDecoration(
-                                                      color: AppColor
-                                                          .scaffoldDarkBackground,
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        topRight:
-                                                            Radius.circular(20),
-                                                        bottomLeft:
-                                                            Radius.circular(20),
-                                                      ),
-                                                      border: Border.all(
-                                                          color:
-                                                              Colors.black38)),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 4.0,
-                                                            bottom: 4.0),
-                                                    child: Container(
-                                                        height: 40,
+                                                  Positioned(
+                                                      top: 0,
+                                                      right: 0,
+                                                      child: Container(
+                                                        height: 60,
                                                         width: 50,
                                                         decoration:
                                                             BoxDecoration(
                                                                 color: AppColor
-                                                                    .primaryColor,
+                                                                    .scaffoldDarkBackground,
                                                                 borderRadius:
                                                                     const BorderRadius
                                                                         .only(
@@ -312,41 +284,70 @@ class _HomePageState extends State<HomePage> {
                                                                           20),
                                                                   bottomLeft: Radius
                                                                       .circular(
-                                                                          15),
+                                                                          20),
                                                                 ),
                                                                 border: Border.all(
                                                                     color: Colors
                                                                         .black38)),
-                                                        child: SvgPicture.asset(
-                                                          AppAssets
-                                                              .heartUnfilled,
-                                                          height: 32,
-                                                          width: 32,
-                                                          fit: BoxFit.scaleDown,
-                                                        )),
-                                                  ),
-                                                )),
-                                            Positioned(
-                                                top: 10,
-                                                left: 10,
-                                                child: SvgPicture.asset(
-                                                  AppAssets.instagramLogo,
-                                                  height: 32,
-                                                  width: 32,
-                                                  fit: BoxFit.scaleDown,
-                                                )),
-                                          ],
-                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 4.0,
+                                                                  bottom: 4.0),
+                                                          child: Container(
+                                                              height: 40,
+                                                              width: 50,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      color: AppColor
+                                                                          .primaryColor,
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .only(
+                                                                        topRight:
+                                                                            Radius.circular(20),
+                                                                        bottomLeft:
+                                                                            Radius.circular(15),
+                                                                      ),
+                                                                      border: Border.all(
+                                                                          color: Colors
+                                                                              .black38)),
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                AppAssets
+                                                                    .heartUnfilled,
+                                                                height: 32,
+                                                                width: 32,
+                                                                fit: BoxFit
+                                                                    .scaleDown,
+                                                              )),
+                                                        ),
+                                                      )),
+                                                  Positioned(
+                                                      top: 10,
+                                                      left: 10,
+                                                      child: SvgPicture.asset(
+                                                        AppAssets.instagramLogo,
+                                                        height: 32,
+                                                        width: 32,
+                                                        fit: BoxFit.scaleDown,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
+                                      controller: homeController.pageController,
+                                      onPageChanged: (index) {
+                                        homeController.changePageIndex(index);
+                                      },
                                     );
-                                  },
-                                ),
-                                controller: homeController.pageController,
-                                onPageChanged: (index) {
-                                  homeController.changePageIndex(index);
-                                },
-                              ),
-                            ),
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                }),
                             Positioned(
                                 right: 0,
                                 left: 0,

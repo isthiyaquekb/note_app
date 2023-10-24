@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:note_app/model/notes_model.dart';
 
 class HomeController extends GetxController with GetSingleTickerProviderStateMixin{
 
@@ -11,16 +15,22 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     Tab(text: 'Today'.toUpperCase()),
     Tab(text: 'Pinned'.toUpperCase()),
   ];
+  //FIRESTORE DECLARED
+  FirebaseFirestore? firestore;
+
+  //LIST OF NOTES
+  var noteList=<NotesModel>[].obs;
 
   @override
   void onInit() {
+    firestore = FirebaseFirestore.instance;
     tabController = TabController(
       initialIndex: 0,
       length: 2,
       vsync: this,
     );
-    pageController = PageController(initialPage: 2,viewportFraction: 0.8);
-
+    pageController = PageController(initialPage: 0,viewportFraction: 0.8);
+    getAllNotes();
 
     super.onInit();
   }
@@ -38,6 +48,17 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   }
 
 
+  Stream<List<NotesModel>>? getAllNotes() {
+    try{
+      var response=firestore
+          ?.collection("Notes").snapshots().map((event) => event.docs.map((e) => NotesModel.fromMap(e.data())).toList());
+      log("GET RESPONSE$response");
+      return response;
+    }catch(error, stackTrace){
+      log("Error $error, $stackTrace");
+    }
+    return null;
+  }
 
   
 }

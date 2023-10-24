@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/controllers/addController.dart';
+import 'package:note_app/controllers/dashboard_controller.dart';
 import 'package:note_app/core/app_assets.dart';
 import 'package:note_app/core/app_color.dart';
 import 'package:note_app/core/app_theme.dart';
@@ -77,8 +79,10 @@ class AddPage extends StatelessWidget {
                           color: AppColor.hintTextColor,
                           borderRadius: BorderRadius.circular(10)),
                       child: Form(
+                        key: addController.nameKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: TextFormField(
+                          controller: addController.nameController,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () =>
@@ -123,6 +127,9 @@ class AddPage extends StatelessWidget {
                             ),
                           ),
                           onSaved: (String? value) {},
+                          validator: (validate){
+                            return addController.nameValidator(validate.toString().trim());
+                          },
                         ),
                       ),
                     ),
@@ -137,8 +144,10 @@ class AddPage extends StatelessWidget {
                 runAlignment: WrapAlignment.start,
                 children: [
                   Form(
+                    key: addController.contentKey,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: TextFormField(
+                      controller: addController.contentController,
                       keyboardType: TextInputType.multiline,
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () =>
@@ -179,6 +188,9 @@ class AddPage extends StatelessWidget {
                         ),
                       ),
                       onSaved: (String? value) {},
+                      validator: (validate){
+                        return addController.contentValidator(validate.toString().trim());
+                      },
                     ),
                   ),
                   Padding(
@@ -202,7 +214,42 @@ class AddPage extends StatelessWidget {
                               color: Colors.white,
                               height: 34,
                               width: 34,
-                            ))
+                            )),
+                        Obx(() => Flexible(
+                          child: Wrap(
+                            children: addController.tagList
+                                .asMap()
+                                .entries
+                                .map((e) =>
+                                e.value.isSelectedTag==true?Container(
+                                    height: 40,
+                                    margin: const EdgeInsets.all(4.0),
+                                    decoration: BoxDecoration(
+                                        color: addController.tagList[e.key]
+                                            .isSelectedTag
+                                            ? AppColor.primaryColor
+                                            : AppColor.accentColor,
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        e.value.tagName.toString(),
+                                        textAlign: TextAlign.center,style: GoogleFonts.quantico(
+                                          fontSize:  addController.tagList[e.key]
+                                              .isSelectedTag?14:16,
+                                          fontWeight: addController.tagList[e.key]
+                                              .isSelectedTag
+                                              ? FontWeight.w400:FontWeight.w700,
+                                          color: addController.tagList[e.key]
+                                              .isSelectedTag
+                                              ? AppColor.black
+                                              : AppColor.white
+                                      ),),
+                                    )):const SizedBox.shrink())
+                                .toList(),
+                          ),
+                        )),
                       ],
                     ),
                   )
@@ -217,7 +264,9 @@ class AddPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 text: "Submit",
                 textColor: AppColor.deepBlue,
-                onClicked: () {},
+                onClicked: (){
+                  addController.submitNote();
+                },
               ),
             ),
           ],
