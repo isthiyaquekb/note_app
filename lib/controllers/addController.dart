@@ -72,9 +72,9 @@ class AddController extends GetxController{
     return null;
   }
 
-  void setTags(bool selectedTag){
-    isSelected.value=!selectedTag;
-
+  void setTags(TagsModel selectedTag){
+    selectedTag.isSelectedTag=selectedTag.isSelectedTag;
+    log("TAG STATUS IS:${selectedTag.isSelectedTag}");
     update();
   }
 
@@ -83,14 +83,14 @@ class AddController extends GetxController{
     //validation
     isNameValid = nameKey.currentState!.validate();
     isContentValid = contentKey.currentState!.validate();
+    // Create a list of selected tags
+    List<TagsModel> selectedTagList = tagList.value
+        .where((tag) => tag.isSelectedTag)
+        .toList();
     Get.focusScope!.unfocus();
     if (isNameValid && isContentValid) {
       nameKey.currentState!.save();
       contentKey.currentState!.save();
-      // Create a list of selected tags
-      List<TagsModel> selectedTagList = tagList.value
-          .where((tag) => tag.isSelectedTag)
-          .toList();
       createNote(nameController.text, contentController.text,selectedTagList);
     }
   }
@@ -100,7 +100,7 @@ class AddController extends GetxController{
       log("NAME $title");
       log("CONTENT $content");
       log("TAGS $tagList");
-      var noteDate = NotesModel(id: "${DateTime.now().millisecondsSinceEpoch}",title: title, content: content, tags: tagList);
+      var noteDate = NotesModel(id: "${DateTime.now().millisecondsSinceEpoch}",title: title, content: content, tags: tagList,isFavourite: false, createdTime: Timestamp.now(),updateTime: Timestamp.now());
       log("INSERT INTO FIRE STORE $noteDate");
 
       await firestore

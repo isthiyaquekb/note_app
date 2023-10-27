@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -100,7 +99,7 @@ class DashboardPage extends StatelessWidget {
             builder: (dashboardController) => IndexedStack(
                   index: dashboardController.selectedTabIndex,
                   children: [
-                    const HomePage(),
+                    HomePage(),
                     HistoryPage(),
                     AddPage(),
                     const NotificationPage(),

@@ -21,6 +21,8 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   //LIST OF NOTES
   var noteList=<NotesModel>[].obs;
 
+  var noDataFound=false.obs;
+
   @override
   void onInit() {
     firestore = FirebaseFirestore.instance;
@@ -47,12 +49,18 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     update();
   }
 
+  void setNotFound(bool notFound){
+    noDataFound.value=notFound;
+    update();
+  }
+
 
   Stream<List<NotesModel>>? getAllNotes() {
     try{
       var response=firestore
-          ?.collection("Notes").snapshots().map((event) => event.docs.map((e) => NotesModel.fromMap(e.data())).toList());
+          ?.collection("Notes").orderBy('created', descending: false).snapshots().map((event) => event.docs.map((e) => NotesModel.fromMap(e.data())).toList());
       log("GET RESPONSE$response");
+
       return response;
     }catch(error, stackTrace){
       log("Error $error, $stackTrace");

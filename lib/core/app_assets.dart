@@ -43,6 +43,9 @@ class AppAssets {
   //LOGO
   static const String instagramLogo = "assets/images/instagram_logo.svg";
 
+  //LOTTIE
+  static const String notFound = "assets/lottie/not_found.json";
+
   //PROFILE PLACEHOLDER
   static const String accountPlaceHolder =
       "assets/images/account_place_holder.png";

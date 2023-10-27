@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: AppRoutes.dashboard, page: ()=>DashboardPage(),binding:DashboardBinding()),
         GetPage(
             name: AppRoutes.home,
-            page: () => const HomePage(),
+            page: () => HomePage(),
             binding: HomeBinding()),
         GetPage(
             name: AppRoutes.login,

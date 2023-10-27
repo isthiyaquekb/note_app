@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/core/app_color.dart';
 
 class AppOutlinedButtonTheme{
