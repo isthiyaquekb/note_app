@@ -97,7 +97,7 @@ class TagsDialog extends StatelessWidget {
                               log("TAG IS SELECTED:${addController.tagList[e
                                   .key].isSelectedTag}");
                             });
-                            addController.setTags(addController.tagList[e.key]);
+                            // addController.setTags(addController.tagList[e.key]);
 
                           },
                           child: Container(

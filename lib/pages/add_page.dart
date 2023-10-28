@@ -16,6 +16,8 @@ class AddPage extends StatelessWidget {
 
   final addController = Get.find<AddController>();
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +50,7 @@ class AddPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                //IMAGE FOR THE NOTE
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Container(
@@ -67,6 +70,7 @@ class AddPage extends StatelessWidget {
                         )),
                   ),
                 ),
+                //NOTE TITLE
                 Flexible(
                   flex: 2,
                   child: Padding(
@@ -135,6 +139,7 @@ class AddPage extends StatelessWidget {
                 )
               ],
             ),
+            //NOTE CONTENT
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Wrap(
@@ -255,6 +260,7 @@ class AddPage extends StatelessWidget {
                 ],
               ),
             ),
+            //NOTE SUBMISSION BUTTON
             Center(
               child: CircularButton(
                 height: 42,

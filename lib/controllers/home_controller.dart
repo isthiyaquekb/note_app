@@ -31,7 +31,7 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
       length: 2,
       vsync: this,
     );
-    pageController = PageController(initialPage: 0,viewportFraction: 0.8);
+    pageController = PageController(initialPage: 1,viewportFraction: 0.8);
     getAllNotes();
 
     super.onInit();
@@ -49,12 +49,33 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     update();
   }
 
+  void setDataLength(int length){
+    noteList.length=length;
+    update();
+  }
   void setNotFound(bool notFound){
     noDataFound.value=notFound;
     update();
   }
 
+  void setTransform(int index){
 
+    if(pageController.position.haveDimensions || !pageController.position.hasPixels) {
+      pageRotationValue.value = index.toDouble()-(pageController.page??pageController.initialPage);
+      pageRotationValue.value=(pageRotationValue.value*0.056).clamp(-2, 1);
+      log("INITIAL PAGE VALUE:${pageController.initialPage}");
+      log("PAGE VALUE:${pageController.page}");
+      log("TRANSFORM VALUE:${pageRotationValue.value}");
+    }else{
+      log("NO DIMENESION");
+      pageRotationValue.value = index.toDouble()-(1);
+      pageRotationValue.value = (pageRotationValue.value*0.056).clamp(-2, 1);
+      log("TRANSFORM VALUE:${pageRotationValue.value}");
+
+    }
+
+    update();
+  }
   Stream<List<NotesModel>>? getAllNotes() {
     try{
       var response=firestore
