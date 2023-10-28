@@ -55,7 +55,7 @@ class HistoryPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: DatePicker(
-                      DateTime.now(),
+                      DateTime.now().subtract(const Duration(days: 6)),
                       initialSelectedDate: DateTime.now(),
                       selectionColor: AppColor.primaryColor,
                       selectedTextColor: AppColor.textColor,
