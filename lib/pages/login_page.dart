@@ -18,9 +18,11 @@ class LoginPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.25,
               ),
               Center(
                 child: Text(
@@ -185,8 +187,8 @@ class LoginPage extends StatelessWidget {
                   )),
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.12,
               ),
             ],
           ),

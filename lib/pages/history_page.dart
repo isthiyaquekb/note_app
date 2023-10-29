@@ -1,8 +1,7 @@
-import 'dart:developer';
-
-import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/controllers/history_controller.dart';
 import 'package:note_app/core/app_color.dart';
 import 'package:note_app/core/app_theme.dart';
@@ -16,26 +15,25 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.scaffoldDarkBackground,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height*0.4,
-            width: double.maxFinite,
-            decoration: BoxDecoration(
-                color: AppColor.hintTextColor.withOpacity(0.9),
-                boxShadow: const <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.white54,
-                    blurRadius: 6.0,
-                    offset: Offset(0.0, 6.0),
-                  ),
-                ],
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                  color: AppColor.hintTextColor.withOpacity(0.9),
+                  boxShadow: const <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.white54,
+                      blurRadius: 6.0,
+                      offset: Offset(0.0, 6.0),
+                    ),
+                  ],
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20))),
               child: Column(
                 children: [
                   const SizedBox(
@@ -46,7 +44,7 @@ class HistoryPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Icon(Icons.arrow_back_ios),
-                      Text(DateTime.now().toString()),
+                      Obx(() => Text(historyController.selectedDate.value),),
                       const Icon(Icons.arrow_forward_ios),
                     ],
                   ),
@@ -54,60 +52,98 @@ class HistoryPage extends StatelessWidget {
                     height: 30,
                   ),
                   Expanded(
-                    child: DatePicker(
-                      DateTime.now().subtract(const Duration(days: 6)),
-                      initialSelectedDate: DateTime.now(),
-                      selectionColor: AppColor.primaryColor,
-                      selectedTextColor: AppColor.textColor,
-                      onDateChange: (date) {
-                        // New date selected
-                        log("Selected date:$date");
-                      },
-                    ),
-                  ),
+                      child: GetBuilder<HistoryController>(builder: (controller)=>ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.allDates.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0,vertical: 4),
+                              child: InkWell(
+                                onTap: (){
+                                  controller.setSelectedDate(DateFormat.yMd().format(controller.allDates[index].first.get("created").toDate()),index);
+                                },
+                                child: Container(
+                                  height: 230,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                      color: controller.currentIndex.value==index?AppColor.bottomNavBarColor:AppColor.scaffoldDarkBackground.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(DateFormat.MMM().format(controller.allDates[index].first.get("created").toDate()).toUpperCase(),style: GoogleFonts.quantico(
+                                            color: Colors.black,
+                                            fontSize: 14,fontWeight: FontWeight.w400
+                                        ),),
+                                        Text(DateFormat.d().format(controller.allDates[index].first.get("created").toDate()).toUpperCase(),style: GoogleFonts.quantico(
+                                            color: Colors.black,
+                                            fontSize: 24,fontWeight: FontWeight.w700
+                                        ),),
+                                        Text(DateFormat.E().format(controller.allDates[index].first.get("created").toDate()).toUpperCase().toUpperCase(),style: GoogleFonts.quantico(
+                                            color: Colors.black,
+                                            fontSize: 14,fontWeight: FontWeight.w400
+                                        ),),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),)),
                 ],
               ),
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0,left: 16.0,bottom: 16.0),
+                  padding: const EdgeInsets.only(
+                      top: 20.0, left: 16.0, bottom: 16.0),
                   child: Text("Today's Post",
                       style: AppTheme.darkTheme.textTheme.bodySmall),
                 ),
-                Expanded(child: ListView.builder(
+                GetBuilder<HistoryController>(builder: (historyController)=>ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: 7,
+                    itemCount: historyController.historyFilterNotes.length,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 4),
                         child: Container(
-                          height: 120,
                           width: double.maxFinite,
                           decoration: BoxDecoration(
-                              color: AppColor.accentColor,
+                              color: AppColor.cardBg,
                               borderRadius: BorderRadius.circular(10)),
-                          child: const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text("Title of the poem"),
-                              Text("How many liked this poem"),
-                            ],
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(historyController.historyFilterNotes[index].get("title"),style: AppTheme
+                                    .darkTheme
+                                    .textTheme
+                                    .displayLarge,),
+                                Text(historyController.historyFilterNotes[index].get("content"),style: AppTheme
+                                    .darkTheme
+                                    .textTheme
+                                    .bodyMedium,),
+                              ],
+                            ),
                           ),
                         ),
                       );
-                    }))
+                    }),)
               ],
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

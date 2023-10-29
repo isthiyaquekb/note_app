@@ -386,7 +386,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      itemCount: 4,
+                      itemCount: 8,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -394,8 +394,8 @@ class _HomePageState extends State<HomePage> {
                             height: 80,
                             width: 320,
                             decoration: BoxDecoration(
-                                color: Colors.amber.shade300,
-                                borderRadius: BorderRadius.circular(20)),
+                                color: AppColor.cardBg,
+                                borderRadius: BorderRadius.circular(10)),
                           ),
                         );
                       })),
