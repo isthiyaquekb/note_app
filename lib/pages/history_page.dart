@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/controllers/history_controller.dart';
 import 'package:note_app/core/app_color.dart';
 import 'package:note_app/core/app_theme.dart';
+import 'package:spring/spring.dart';
 
 class HistoryPage extends StatelessWidget {
   HistoryPage({Key? key}) : super(key: key);
@@ -112,29 +113,32 @@ class HistoryPage extends StatelessWidget {
                     itemCount: historyController.historyFilterNotes.length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 4),
-                        child: Container(
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                              color: AppColor.cardBg,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(historyController.historyFilterNotes[index].get("title"),style: AppTheme
-                                    .darkTheme
-                                    .textTheme
-                                    .displayLarge,),
-                                Text(historyController.historyFilterNotes[index].get("content"),style: AppTheme
-                                    .darkTheme
-                                    .textTheme
-                                    .bodyMedium,),
-                              ],
+                      return Spring.slide(
+                        slideType: SlideType.slide_in_right,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4),
+                          child: Container(
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                                color: AppColor.cardBg,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(historyController.historyFilterNotes[index].get("title"),style: AppTheme
+                                      .darkTheme
+                                      .textTheme
+                                      .displayLarge,),
+                                  Text(historyController.historyFilterNotes[index].get("content"),style: AppTheme
+                                      .darkTheme
+                                      .textTheme
+                                      .bodyMedium,),
+                                ],
+                              ),
                             ),
                           ),
                         ),

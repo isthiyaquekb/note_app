@@ -23,6 +23,7 @@ class HistoryController extends GetxController {
     getAllNotes();
     //GET ONLY DATES
     groupDocumentsByDate();
+
   }
 
   void getAllNotes() async {
@@ -33,7 +34,6 @@ class HistoryController extends GetxController {
 
     QuerySnapshot snapshot = await query.get();
     allNotes.value = snapshot.docs.toSet().toList();
-    historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==DateFormat.yMd().format(allDates[0].first.get("created").toDate())).toList();
     update();
   }
 
@@ -62,7 +62,12 @@ class HistoryController extends GetxController {
     }
     // Convert the values (lists of documents) to a list
     allDates.value = groupedDocuments.values.toList();
+
+    //GET HISTORY
+    historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==DateFormat.yMd().format(allDates[0].first.get("created").toDate())).toList();
+    selectedDate.value=DateFormat.yMd().format(allDates[0].first.get("created").toDate());
     update();
+
   }
 
   //SET SELECTED DATE

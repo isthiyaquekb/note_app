@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:note_app/controllers/splash_controller.dart';
+import 'package:note_app/core/app_assets.dart';
+import 'package:note_app/core/app_color.dart';
 import 'package:note_app/core/app_theme.dart';
 
 class SplashPage extends StatelessWidget {
@@ -11,6 +13,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColor.scaffoldDarkBackground,
       body: Stack(
         children: [
           AnimatedPositioned(
@@ -22,11 +25,16 @@ class SplashPage extends StatelessWidget {
             left: 0,
             right: splashController.animate.value ? 100 : -200,
             top: 0,
-            child: Center(
-              child: Text(
-                "Note App",
-                style: AppTheme.darkTheme.textTheme.labelLarge,
-              ),
+            child: Column(
+              children: [
+                Image(image: const AssetImage(AppAssets.appLogo),height: MediaQuery.of(context).size.width*0.3,width: MediaQuery.of(context).size.width*0.3,),
+                Center(
+                  child: Text(
+                    "Note App",
+                    style: AppTheme.darkTheme.textTheme.labelLarge,
+                  ),
+                ),
+              ],
             ),
           ),
 

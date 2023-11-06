@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:note_app/model/tags_model.dart';
+import 'package:note_app/model/user_model.dart';
 
 class NotesModel {
   final String? id;
@@ -9,6 +10,7 @@ class NotesModel {
   final bool isFavourite;
   final Timestamp createdTime;
   final Timestamp updateTime;
+  final String userId;
 
   NotesModel({
     this.id,
@@ -18,6 +20,7 @@ class NotesModel {
     required this.isFavourite,
     required this.createdTime,
     required this.updateTime,
+    required this.userId,
   });
 
   factory NotesModel.fromMap(Map<String, dynamic> json) {
@@ -29,6 +32,7 @@ class NotesModel {
       isFavourite:json['isFavourite']??false,
       createdTime:json['created'],
       updateTime:json['update'],
+      userId:json['uid'],
     );
   }
 
@@ -40,6 +44,7 @@ class NotesModel {
     "isFavourite":isFavourite,
     "created":createdTime,
     "update":updateTime,
+    "uid":userId,
 
   };
 

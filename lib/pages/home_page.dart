@@ -374,7 +374,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         } else {
-                          return const CircularProgressIndicator();
+                          return const Center(child: CircularProgressIndicator());
                         }
                       }),
               //SECOND CHILD OF TAB BAR

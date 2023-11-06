@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,10 +34,13 @@ class AddController extends GetxController{
   var tagList = <TagsModel>[].obs;
   //FIRESTORE DECLARED
   FirebaseFirestore? firestore;
-
+  FirebaseAuth? auth;
+  var userId="";
   @override
   void onInit() {
     firestore = FirebaseFirestore.instance;
+    auth = FirebaseAuth.instance;
+    userId=auth!.currentUser!.uid;
     nameController.text = "";
     contentController.text = "";
     tagList.value=[
@@ -100,7 +104,7 @@ class AddController extends GetxController{
       log("NAME $title");
       log("CONTENT $content");
       log("TAGS $tagList");
-      var noteDate = NotesModel(id: "${DateTime.now().millisecondsSinceEpoch}",title: title, content: content, tags: tagList,isFavourite: false, createdTime: Timestamp.now(),updateTime: Timestamp.now());
+      var noteDate = NotesModel(id: "${DateTime.now().millisecondsSinceEpoch}",title: title, content: content, tags: tagList,isFavourite: false, createdTime: Timestamp.now(),updateTime: Timestamp.now(), userId: userId);
       log("INSERT INTO FIRE STORE $noteDate");
 
       await firestore

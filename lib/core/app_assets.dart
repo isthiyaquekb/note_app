@@ -2,7 +2,7 @@ class AppAssets {
   AppAssets._();
 
   //APP LOGO
-  static const String appLogo = "assets/images/bg_block_chain.png";
+  static const String appLogo = "assets/images/note_app_logo.png";
 
   //BG
   static const String bgImage = "assets/images/png/bg_image.png";
