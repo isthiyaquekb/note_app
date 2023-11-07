@@ -61,7 +61,7 @@ class HistoryController extends GetxController {
       }
     }
     // Convert the values (lists of documents) to a list
-    allDates.value = groupedDocuments.values.toList();
+    allDates.value = groupedDocuments.values.toList().reversed.toList();
 
     //GET HISTORY
     historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==DateFormat.yMd().format(allDates[0].first.get("created").toDate())).toList();

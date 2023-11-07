@@ -10,7 +10,7 @@ class NotesModel {
   final bool isFavourite;
   final Timestamp createdTime;
   final Timestamp updateTime;
-  final String userId;
+  final String? userId;
 
   NotesModel({
     this.id,
@@ -20,7 +20,7 @@ class NotesModel {
     required this.isFavourite,
     required this.createdTime,
     required this.updateTime,
-    required this.userId,
+    this.userId,
   });
 
   factory NotesModel.fromMap(Map<String, dynamic> json) {
@@ -32,7 +32,7 @@ class NotesModel {
       isFavourite:json['isFavourite']??false,
       createdTime:json['created'],
       updateTime:json['update'],
-      userId:json['uid'],
+      userId:json['userId']??"",
     );
   }
 
@@ -44,7 +44,7 @@ class NotesModel {
     "isFavourite":isFavourite,
     "created":createdTime,
     "update":updateTime,
-    "uid":userId,
+    "userId":userId,
 
   };
 

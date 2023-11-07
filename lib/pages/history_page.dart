@@ -38,19 +38,7 @@ class HistoryPage extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.arrow_back_ios),
-                      Obx(() => Text(historyController.selectedDate.value),),
-                      const Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30,
+                    height: 60,
                   ),
                   Expanded(
                       child: GetBuilder<HistoryController>(builder: (controller)=>ListView.builder(

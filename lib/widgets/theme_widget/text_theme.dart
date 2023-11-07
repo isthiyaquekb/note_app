@@ -5,79 +5,79 @@ import 'package:note_app/core/app_color.dart';
 class AppTextTheme {
   AppTextTheme._();
   static TextTheme lightTextTheme = TextTheme(
-    displayLarge: GoogleFonts.quantico(
+    displayLarge: GoogleFonts.lato(
         color: Colors.black87,
         fontSize: 34,
         fontWeight: FontWeight.w700
     ),
-    displayMedium: GoogleFonts.quantico(
+    displayMedium: GoogleFonts.lato(
         color: Colors.black87,
         fontSize: 24,
         fontWeight: FontWeight.w700
     ),
-    titleMedium: GoogleFonts.quantico(
+    titleMedium: GoogleFonts.lato(
         color: Colors.black87,
         fontSize: 14,
         fontWeight: FontWeight.w400
     ),
-    titleLarge: GoogleFonts.quantico(
+    titleLarge: GoogleFonts.lato(
         color: Colors.black87,
         fontSize: 16,
         fontWeight: FontWeight.w400
     ),
-    labelLarge: GoogleFonts.quantico(
+    labelLarge: GoogleFonts.lato(
       color: AppColor.white,
       fontSize: 16,
       fontWeight: FontWeight.w600
     ),
-    bodyLarge: GoogleFonts.quantico(
+    bodyLarge: GoogleFonts.lato(
         color: Colors.black87,
         fontSize: 16,
         fontWeight: FontWeight.normal
     ),
-    bodyMedium: GoogleFonts.quantico(
+    bodyMedium: GoogleFonts.lato(
         color: Colors.black87,
         fontSize: 14,
         fontWeight: FontWeight.normal
     ),
-    bodySmall: GoogleFonts.quantico(
+    bodySmall: GoogleFonts.lato(
         color: Colors.black87,
         fontSize: 14,
         fontWeight: FontWeight.normal
     ),
   );
   static TextTheme darkTextTheme = TextTheme(
-    displayLarge: GoogleFonts.quantico(
+    displayLarge: GoogleFonts.lato(
         color: Colors.white,
         fontSize: 28,
-        fontWeight: FontWeight.w700
+        fontWeight: FontWeight.w800
     ),
-    displayMedium: GoogleFonts.quantico(
+    displayMedium: GoogleFonts.lato(
         color: Colors.white,
         fontSize: 24,
         fontWeight: FontWeight.w700
     ),
-    titleLarge: GoogleFonts.quantico(
+    titleLarge: GoogleFonts.lato(
         color: Colors.white,
         fontSize: 16,
         fontWeight: FontWeight.w400
     ),
-    titleMedium: GoogleFonts.quantico(
+    titleMedium: GoogleFonts.lato(
         color: Colors.white,
         fontSize: 14,
         fontWeight: FontWeight.w400
     ),
-    labelLarge: GoogleFonts.quantico(
+    labelLarge: GoogleFonts.lato(
         color: AppColor.black,
         fontSize: 16,
         fontWeight: FontWeight.w600
     ),
-    bodyMedium: GoogleFonts.quantico(
+    bodyMedium: GoogleFonts.lato(
         color: Colors.white,
         fontSize: 16,
         fontWeight: FontWeight.normal
     ),
-    bodySmall: GoogleFonts.quantico(
+    bodySmall: GoogleFonts.lato(
         color: Colors.white,
         fontSize: 14,
         fontWeight: FontWeight.normal

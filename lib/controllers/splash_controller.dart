@@ -23,7 +23,7 @@ class SplashController extends GetxController{
   }
 
   Future startWaveAnimation() async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 500));
     animate.value=true;
     await Future.delayed(const Duration(milliseconds: 5000));
     await _navigateToHome();

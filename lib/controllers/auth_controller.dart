@@ -166,7 +166,7 @@ class AuthController extends GetxController {
       if (firebaseUser.value != null) {
         isLoading.value=false;
         final userData =
-            UserModel(firstname: firstname, lastname: lastname, email: email);
+            UserModel(firstname: firstname, lastname: lastname, email: email,userId:auth!.currentUser!.uid);
         createUser(userData);
         Get.offAllNamed(AppRoutes.login);
       } else {
