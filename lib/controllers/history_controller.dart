@@ -66,6 +66,7 @@ class HistoryController extends GetxController {
     //GET HISTORY
     historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==DateFormat.yMd().format(allDates[0].first.get("created").toDate())).toList();
     selectedDate.value=DateFormat.yMd().format(allDates[0].first.get("created").toDate());
+    setSelectedDate(selectedDate.value,0);
     update();
 
   }

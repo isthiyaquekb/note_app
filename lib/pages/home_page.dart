@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -301,35 +303,51 @@ class _HomePageState extends State<HomePage> {
                                                     const EdgeInsets.only(
                                                         left: 4.0,
                                                         bottom: 4.0),
-                                                    child: Container(
-                                                        height: 40,
-                                                        width: 50,
-                                                        decoration:
-                                                        BoxDecoration(
-                                                            color: AppColor
-                                                                .primaryColor,
-                                                            borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                  20),
-                                                              bottomLeft:
-                                                              Radius.circular(
-                                                                  15),
-                                                            ),
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .black38)),
-                                                        child:
-                                                        SvgPicture.asset(
-                                                          AppAssets
-                                                              .heartUnfilled,
-                                                          height: 32,
-                                                          width: 32,
-                                                          fit: BoxFit
-                                                              .scaleDown,
-                                                        )),
+                                                    child: InkWell(
+                                                      onTap: (){
+                                                        homeController.updateNote(snapshot
+                                                            .data![index],index);
+                                                      },
+                                                      child: Container(
+                                                          height: 40,
+                                                          width: 50,
+                                                          decoration:
+                                                          BoxDecoration(
+                                                              color: AppColor
+                                                                  .primaryColor,
+                                                              borderRadius:
+                                                              const BorderRadius
+                                                                  .only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                    20),
+                                                                bottomLeft:
+                                                                Radius.circular(
+                                                                    15),
+                                                              ),
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .black38)),
+                                                          child:snapshot
+                                                              .data![index]
+                                                              .isFavourite?
+                                                          SvgPicture.asset(
+                                                            AppAssets
+                                                                .heartFilled,
+                                                            height: 32,
+                                                            width: 32,
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                            color: AppColor.scaffoldDarkBackground,
+                                                          ):SvgPicture.asset(
+                                                            AppAssets
+                                                                .heartUnfilled,
+                                                            height: 32,
+                                                            width: 32,
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                          )),
+                                                    ),
                                                   ),
                                                 )),
                                             Positioned(
@@ -378,27 +396,91 @@ class _HomePageState extends State<HomePage> {
                         }
                       }),
               //SECOND CHILD OF TAB BAR
-              Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10),
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: 8,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 80,
-                            width: 320,
-                            decoration: BoxDecoration(
-                                color: AppColor.cardBg,
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                        );
-                      })),
+                  StreamBuilder(
+                      stream: homeController.getAllPinned(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.isEmpty) {
+                            homeController.setNotFound(true);
+                          }
+                          return snapshot.data!.isNotEmpty
+                              ? ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: const ClampingScrollPhysics(),
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 320,
+                                    decoration: BoxDecoration(
+                                        color: AppColor.cardBg,
+                                        borderRadius: BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(snapshot
+                                                  .data![index]
+                                                  .title,
+                                                style: AppTheme
+                                                    .darkTheme
+                                                    .textTheme
+                                                    .displayLarge,),
+                                              SvgPicture.asset(
+                                                AppAssets
+                                                    .heartFilled,
+                                                height: 32,
+                                                width: 32,
+                                                fit: BoxFit
+                                                    .scaleDown,
+                                                color: AppColor.bottomNavBarColor,
+                                              )
+                                            ],
+                                          ),
+                                          Text(snapshot
+                                              .data![index].content,style: AppTheme
+                                              .darkTheme
+                                              .textTheme
+                                              .bodyMedium,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                          )
+                              : Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 240,
+                                  width: 240,
+                                  child: Lottie.asset(
+                                    AppAssets.notFound,
+                                  ),
+                                ),
+                                Text(
+                                  "No data found",
+                                  style: GoogleFonts.quantico(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColor.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                      }),
             ]),
           )
         ],

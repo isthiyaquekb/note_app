@@ -46,6 +46,7 @@ dependencies:
   date_picker_timeline: ^1.2.5
   lottie: ^2.4.0
   spring: ^2.0.2
+  firebase_messaging: ^14.7.4
 
 dev_dependencies:
   flutter_test:

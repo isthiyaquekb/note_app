@@ -18,6 +18,7 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   //FIRESTORE DECLARED
   FirebaseFirestore? firestore;
 
+  var documentId="";
   //LIST OF NOTES
   var noteList=<NotesModel>[].obs;
 
@@ -53,6 +54,7 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     noteList.length=length;
     update();
   }
+
   void setNotFound(bool notFound){
     noDataFound.value=notFound;
     update();
@@ -63,19 +65,16 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     if(pageController.position.haveDimensions || !pageController.position.hasPixels) {
       pageRotationValue.value = index.toDouble()-(pageController.page??pageController.initialPage);
       pageRotationValue.value=(pageRotationValue.value*0.056).clamp(-2, 1);
-      log("INITIAL PAGE VALUE:${pageController.initialPage}");
-      log("PAGE VALUE:${pageController.page}");
-      log("TRANSFORM VALUE:${pageRotationValue.value}");
     }else{
-      log("NO DIMENESION");
+
       pageRotationValue.value = index.toDouble()-(1);
       pageRotationValue.value = (pageRotationValue.value*0.056).clamp(-2, 1);
-      log("TRANSFORM VALUE:${pageRotationValue.value}");
-
     }
 
     update();
   }
+
+  //GET ALL NOTES
   Stream<List<NotesModel>>? getAllNotes() {
     try{
       var response=firestore
@@ -89,5 +88,35 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     return null;
   }
 
+  //UPDATE NOTES
+  void updateNote(NotesModel note,int index) async {
+    try{
+      firestore!.collection("Notes").get().then((value){
+       documentId=value.docs.reversed.toList()[index].reference.id;
+      firestore!.collection("Notes").doc(documentId).update({
+         "isFavourite":!note.isFavourite
+       });
+      });
+
+    }catch(error, stackTrace){
+      log("Error $error, $stackTrace");
+    }
+    return null;
+  }
+
+  //GET ALL PINNED NOTES
+
+  Stream<List<NotesModel>>? getAllPinned(){
+    try{
+      var pinnedResp=firestore
+          ?.collection("Notes").where('isFavourite', isEqualTo: true).snapshots().map((event) => event.docs.map((e) => NotesModel.fromMap(e.data())).toList());
+      log("GET RESPONSE$pinnedResp");
+
+      return pinnedResp;
+    }catch(error, stackTrace){
+      log("Error $error, $stackTrace");
+    }
+    return null;
+  }
   
 }
