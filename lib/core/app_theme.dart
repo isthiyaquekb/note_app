@@ -9,48 +9,57 @@ import 'app_color.dart';
 class AppTheme {
   AppTheme._();
 
+  // Light Theme
   static ThemeData lightTheme = ThemeData(
-      textTheme: AppTextTheme.lightTextTheme,
-      elevatedButtonTheme: AppElevatedButtonTheme.lightElevatedButtonTheme,
-      outlinedButtonTheme: AppOutlinedButtonTheme.lightOutlinedButtonTheme,
-      inputDecorationTheme: AppTextFormFieldTheme.lightTextInputDecorationTheme,
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          foregroundColor: AppColor.scaffoldDarkBackground,
-          elevation: 4,
-          splashColor: AppColor.accentColor
-      ), colorScheme: ColorScheme.fromSwatch(primarySwatch: const MaterialColor(0x9993EFED, <int, Color>{
-        50: Color(0x0D93EFED),
-        100: Color(0x1A93EFED),
-        200: Color(0x3393EFED),
-        300: Color(0x4D93EFED),
-        400: Color(0x6693EFED),
-        500: Color(0x9993EFED),
-        600: Color(0xB393EFED),
-        700: Color(0xB393EFED),
-        800: Color(0xCC93EFED),
-        900: Color(0xE693EFED),
-      },)).copyWith(background: AppColor.scaffoldBackground,brightness:Brightness.light,)
+    textTheme: AppTextTheme.lightTextTheme,
+    elevatedButtonTheme: AppElevatedButtonTheme.lightElevatedButtonTheme,
+    outlinedButtonTheme: AppOutlinedButtonTheme.lightOutlinedButtonTheme,
+    inputDecorationTheme: AppTextFormFieldTheme.lightTextInputDecorationTheme,
+    scaffoldBackgroundColor: const Color(0xFFF5E8DD),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      foregroundColor: AppColor.scaffoldDarkBackground,
+      elevation: 4,
+      splashColor: AppColor.accentColor,
+    ),
+    colorScheme: const ColorScheme(
+      primary: Color(0xFFF5E8DD), // Primary scaffold background color
+      onPrimary: Color(0xFF45465B), // Text color on primary
+      secondary: Color(0xFF4262C5), // Accent color
+      onSecondary: Color(0xFF45465B),
+      error: Colors.redAccent,
+      onError: Colors.white,
+      background: Color(0xFFF5E8DD),
+      onBackground: Colors.black,
+      surface: Color(0xFFF5E8DD),
+      onSurface: Color(0xFF45465B),
+      brightness: Brightness.light,
+    ),
   );
+
+  // Dark Theme
   static ThemeData darkTheme = ThemeData(
-      textTheme: AppTextTheme.darkTextTheme,
-      elevatedButtonTheme: AppElevatedButtonTheme.darkElevatedButtonTheme,
-      outlinedButtonTheme: AppOutlinedButtonTheme.darkOutlinedButtonTheme,
-      inputDecorationTheme: AppTextFormFieldTheme.darkTextInputDecorationTheme,
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          foregroundColor: AppColor.primaryColor,
-          elevation: 4,
-          splashColor: AppColor.accentColor
-      ), colorScheme: ColorScheme.fromSwatch(primarySwatch: const MaterialColor(0x9993EFED, <int, Color>{
-        50: Color(0x0D93EFED),
-        100: Color(0x1A93EFED),
-        200: Color(0x3393EFED),
-        300: Color(0x4D93EFED),
-        400: Color(0x6693EFED),
-        500: Color(0x9993EFED),
-        600: Color(0xB393EFED),
-        700: Color(0xB393EFED),
-        800: Color(0xCC93EFED),
-        900: Color(0xE693EFED),
-      },)).copyWith(background: AppColor.scaffoldDarkBackground,brightness: Brightness.dark,)
+    textTheme: AppTextTheme.darkTextTheme,
+    elevatedButtonTheme: AppElevatedButtonTheme.darkElevatedButtonTheme,
+    outlinedButtonTheme: AppOutlinedButtonTheme.darkOutlinedButtonTheme,
+    inputDecorationTheme: AppTextFormFieldTheme.darkTextInputDecorationTheme,
+    scaffoldBackgroundColor: const Color(0xFF42476D),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      foregroundColor: AppColor.primaryColor,
+      elevation: 4,
+      splashColor: AppColor.accentColor,
+    ),
+    colorScheme: const ColorScheme(
+      primary: Color(0xFF42476D), // Primary scaffold background color
+      onPrimary: Color(0xFFD7D7D7), // Text color on primary
+      secondary: Color(0xFF4262C5), // Accent color
+      onSecondary: Color(0xFFD7D7D7),
+      error: Colors.redAccent,
+      onError: Colors.black,
+      background: Color(0xFF42476D),
+      onBackground: Colors.white,
+      surface: Color(0xFF42476D),
+      onSurface: Color(0xFFD7D7D7),
+      brightness: Brightness.dark,
+    ),
   );
 }

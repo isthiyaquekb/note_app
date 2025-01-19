@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:note_app/controllers/addController.dart';
 import 'package:note_app/core/app_assets.dart';
 import 'package:note_app/core/app_color.dart';
+import 'package:note_app/core/app_routes.dart';
 import 'package:note_app/core/app_theme.dart';
 import 'package:note_app/widgets/dialogs/tags_dialog.dart';
 
@@ -44,7 +45,7 @@ class AddPage extends StatelessWidget {
             const SizedBox(height: 40,),
             Text(
               "Write a poem",
-              style: AppTheme.darkTheme.textTheme.displayMedium,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -64,7 +65,7 @@ class AddPage extends StatelessWidget {
                         },
                         child: SvgPicture.asset(
                           AppAssets.galleryAdd,
-                          color: Colors.white,
+                          color: Theme.of(context).iconTheme.color,
                           height: 40,
                           width: 40,
                         )),
@@ -76,9 +77,8 @@ class AddPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Container(
-                      height: 100,
                       decoration: BoxDecoration(
-                          color: AppColor.hintTextColor,
+                          color: AppColor.secondaryColor,
                           borderRadius: BorderRadius.circular(10)),
                       child: Form(
                         key: addController.nameKey,
@@ -90,16 +90,13 @@ class AddPage extends StatelessWidget {
                           onEditingComplete: () =>
                               FocusScope.of(context).nextFocus(),
                           maxLines: 3,
-                          style: const TextStyle(
-                              color: AppColor.primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400),
+                          style: Theme.of(context).textTheme.labelMedium,
                           decoration: InputDecoration(
                             alignLabelWithHint: true,
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
                             labelText: "Your title",
                             floatingLabelStyle: const TextStyle(
-                                color: AppColor.primaryColor,
+                                color: AppColor.accentColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400
                             ),
@@ -115,7 +112,7 @@ class AddPage extends StatelessWidget {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
-                                  color: AppColor.primaryColor),
+                                  color: AppColor.accentColor),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -158,17 +155,19 @@ class AddPage extends StatelessWidget {
                       minLines: 1,
                       maxLines: null,
                         textCapitalization:TextCapitalization.sentences,
-                      style: const TextStyle(
-                          color: AppColor.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
+                      style: Theme.of(context).textTheme.labelMedium,
                       decoration: InputDecoration(
                         alignLabelWithHint: true,
                         labelText: "Your poem will be write over here",
                         labelStyle: const TextStyle(
-                            color: AppColor.hintTextColor,
+                            color: AppColor.accentColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w400),
+                        floatingLabelStyle: const TextStyle(
+                            color: AppColor.accentColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400
+                        ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide:
@@ -177,7 +176,7 @@ class AddPage extends StatelessWidget {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide:
-                              const BorderSide(color: AppColor.primaryColor),
+                              const BorderSide(color: AppColor.accentColor),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -202,19 +201,20 @@ class AddPage extends StatelessWidget {
                       children: [
                         Text(
                           "Tags :",
-                          style: AppTheme.darkTheme.textTheme.bodySmall,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                         InkWell(
                             onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return TagsDialog();
-                                  });
+                              Get.toNamed(AppRoutes.tagPage);
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (BuildContext context) {
+                              //       return TagsDialog();
+                              //     });
                             },
                             child: SvgPicture.asset(
                               AppAssets.hashTagAdd,
-                              color: Colors.white,
+                              color: Theme.of(context).iconTheme.color,
                               height: 34,
                               width: 34,
                             )),
@@ -265,7 +265,7 @@ class AddPage extends StatelessWidget {
               child: CircularButton(
                 height: 42,
                 width: MediaQuery.of(context).size.width * 0.6,
-                color: AppColor.primaryColor,
+                color: AppColor.accentColor,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 text: "Submit",
                 textColor: AppColor.deepBlue,

@@ -26,7 +26,7 @@ class AppTextTheme {
         fontWeight: FontWeight.w400
     ),
     labelLarge: GoogleFonts.lato(
-      color: AppColor.white,
+      color: Colors.black87,
       fontSize: 16,
       fontWeight: FontWeight.w600
     ),
@@ -68,7 +68,7 @@ class AppTextTheme {
         fontWeight: FontWeight.w400
     ),
     labelLarge: GoogleFonts.lato(
-        color: AppColor.black,
+        color: AppColor.white,
         fontSize: 16,
         fontWeight: FontWeight.w600
     ),

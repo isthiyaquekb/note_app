@@ -5,5 +5,6 @@ abstract  class AppRoutes{
   static const login="/login";
   static const signUp="/sign-up";
   static const addPage="/add-page";
+  static const tagPage="/tag-page";
 
 }

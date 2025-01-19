@@ -19,6 +19,7 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.scaffoldBackground,
         bottomNavigationBar: GetBuilder<DashboardController>(builder: (dashboardController)=>CustomAnimatedBottomBar(
           containerHeight: 70,
           backgroundColor: AppColor.scaffoldDarkBackground,
@@ -33,11 +34,11 @@ class DashboardPage extends StatelessWidget {
                 AppAssets.homeIcon,
                 height: 24,width: 24,
                 color: dashboardController.selectedTabIndex == 0
-                    ? AppColor.bottomNavBarColor
-                    : AppColor.white,
+                    ? AppColor.secondaryColor
+                    : AppColor.bottomNavBarColor,
               ),
               title: const Text('Home'),
-              activeColor: AppColor.bottomNavBarColor,
+              activeColor: AppColor.secondaryColor,
               inactiveColor: Colors.amber,
               textAlign: TextAlign.center,
             ),
@@ -46,11 +47,11 @@ class DashboardPage extends StatelessWidget {
                 AppAssets.calenderIcon,
                 height: 24,width: 24,
                 color: dashboardController.selectedTabIndex == 1
-                    ? AppColor.bottomNavBarColor
-                    : AppColor.white,
+                    ? AppColor.secondaryColor
+                    : AppColor.bottomNavBarColor,
               ),
               title: const Text('Past'),
-              activeColor: AppColor.bottomNavBarColor,
+              activeColor: AppColor.secondaryColor,
               inactiveColor: Colors.amber,
               textAlign: TextAlign.center,
             ),
@@ -59,11 +60,11 @@ class DashboardPage extends StatelessWidget {
                 AppAssets.add,
                 height: 24,width: 24,
                 color: dashboardController.selectedTabIndex == 2
-                    ? AppColor.bottomNavBarColor
-                    : AppColor.white,
+                    ? AppColor.secondaryColor
+                    : AppColor.bottomNavBarColor,
               ),
               title: const Text('Add '),
-              activeColor: AppColor.bottomNavBarColor,
+              activeColor: AppColor.secondaryColor,
               inactiveColor: Colors.amber,
               textAlign: TextAlign.center,
             ),
@@ -72,11 +73,11 @@ class DashboardPage extends StatelessWidget {
                 AppAssets.bellIcon,
                 height: 24,width: 24,
                 color: dashboardController.selectedTabIndex == 3
-                    ? AppColor.bottomNavBarColor
-                    : AppColor.white,
+                    ? AppColor.secondaryColor
+                    : AppColor.bottomNavBarColor,
               ),
               title: const Text('Notification '),
-              activeColor: AppColor.bottomNavBarColor,
+              activeColor: AppColor.secondaryColor,
               inactiveColor: Colors.amber,
               textAlign: TextAlign.center,
             ),
@@ -85,11 +86,11 @@ class DashboardPage extends StatelessWidget {
                 AppAssets.settingIcon,
                 height: 24,width: 24,
                 color: dashboardController.selectedTabIndex == 4
-                    ? AppColor.bottomNavBarColor
-                    : AppColor.white,
+                    ? AppColor.secondaryColor
+                    : AppColor.bottomNavBarColor,
               ),
               title: const Text('Settings'),
-              activeColor: AppColor.bottomNavBarColor,
+              activeColor: AppColor.secondaryColor,
               inactiveColor: Colors.amber,
               textAlign: TextAlign.center,
             ),
@@ -99,7 +100,7 @@ class DashboardPage extends StatelessWidget {
             builder: (dashboardController) => IndexedStack(
                   index: dashboardController.selectedTabIndex,
                   children: [
-                    HomePage(),
+                    const HomePage(),
                     HistoryPage(),
                     AddPage(),
                     const NotificationPage(),

@@ -1,5 +1,5 @@
-import 'dart:convert';
-import 'dart:developer' as developer;
+import 'dart:developer';
+
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -14,6 +14,7 @@ class HistoryController extends GetxController {
 
   //FIRESTORE DECLARED
   FirebaseFirestore? firestore;
+  var filterByDay=<String>[];
 
   @override
   void onInit() {
@@ -22,14 +23,31 @@ class HistoryController extends GetxController {
     //GET ALL NOTES
     getAllNotes();
     //GET ONLY DATES
-    groupDocumentsByDate();
+    // groupDocumentsByDate();
+    //GET ALL TAGS
+    filterByDay=[
+      "Today",
+      "Yesterday",
+      "1 Week Ago",
+      "1 Month Ago",
+      "3 Months Ago",
+      "6 Month Ago",
+      "1 Year Ago"
+    ];
+    selectedDate.value=filterByDay.first;
+    update();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
 
   }
 
   void getAllNotes() async {
     Query query = firestore!
         .collection("Notes")
-        .orderBy('created', descending: false)
+        .orderBy('created', descending: true)
         .limit(10);
 
     QuerySnapshot snapshot = await query.get();
@@ -63,19 +81,72 @@ class HistoryController extends GetxController {
     // Convert the values (lists of documents) to a list
     allDates.value = groupedDocuments.values.toList().reversed.toList();
 
-    //GET HISTORY
-    historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==DateFormat.yMd().format(allDates[0].first.get("created").toDate())).toList();
-    selectedDate.value=DateFormat.yMd().format(allDates[0].first.get("created").toDate());
-    setSelectedDate(selectedDate.value,0);
     update();
 
   }
 
   //SET SELECTED DATE
-  void setSelectedDate(String historyDate,int index) {
-    currentIndex.value = index;
-    selectedDate.value=historyDate;
-    historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==historyDate).toList();
+  void setSelectedDate(DateTime selectedDate) {
+    // currentIndex.value = index;
+    DateTime endDate = DateTime.now(); // Current time
+    log("START DATE:$selectedDate");
+    log("END DATE:$endDate");
+    historyFilterNotes.value=allNotes
+        .where((note) {
+      DateTime createdDate = note.get('created').toDate();
+      return createdDate.isAfter(selectedDate) && createdDate.isBefore(endDate);
+    })
+        .toList();
+    log("HISTORY LIST:${historyFilterNotes.length}");
+    // historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==historyDate).toList();
     update();
+  }
+  void setFilterDate(String selected) {
+    selectedDate.value=selected;
+    log("SELECTED DATE:${selectedDate.value}");
+    // historyFilterNotes.value=allNotes.where((p0) =>DateFormat.yMd().format(p0.get("created").toDate())==historyDate).toList();
+    var dateRange=getDateRangeStart(selectedDate.value);
+    setSelectedDate(dateRange);
+    update();
+  }
+
+  DateTime getDateRangeStart(String filter) {
+    DateTime today = DateTime.now();
+    switch (filter) {
+      case "Today":
+        return DateTime(today.year, today.month, today.day).toUtc().toLocal();
+      case "Yesterday":
+        return today.subtract(const Duration(days: 1));
+      case "1 Week Ago":
+        return today.subtract(const Duration(days: 7));
+      case "1 Month Ago":
+        return today.subtract(const Duration(days: 30));
+      case "3 Months Ago":
+        return today.subtract(const Duration(days: 90));
+      case "6 Months Ago":
+        return today.subtract(const Duration(days: 180));
+      case "1 Year Ago":
+        return today.subtract(const Duration(days: 365));
+      default:
+        return today; // Return today's date as a default
+    }
+  }
+
+  void resetFilter() {
+    historyFilterNotes.clear();
+    update();
+  }
+
+  void deletePost(String noteId) async {
+    log("ID FOR DELETE POST:$noteId");
+    final noteRef = firestore?.collection("Notes").doc(noteId);
+
+    try {
+      await noteRef?.delete();
+      log("Note deleted successfully: ${noteRef?.path}");
+      getAllNotes();
+    } catch (error) {
+      log("Error deleting note: $error");
+    }
   }
 }

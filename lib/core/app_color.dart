@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class AppColor {
   AppColor._();
 
-  static const Color primaryColor = Color(0xFF93EFED);
-  static const Color secondaryColor = Color(0xFF44aec2);
+  static const Color primaryColor = Color(0xFF858585);
+  static const Color secondaryColor = Color(0xFFACBDAA);
   static const Color accentColor = Color(0xFF4262c5);
-  static const Color scaffoldBackground =Color(0xFFFFFFFF);
-  static const Color bottomNavBarColor = Color(0xFF00ffff);
-  static const Color scaffoldDarkBackground =Color(0xFF42476d);
+  static const Color scaffoldBackground =Color(0xFFACBDAA);
+  static const Color bottomNavBarColor = Color(0xFF42476d);
+  static const Color scaffoldDarkBackground =Color(0xFFF5E8DD);
   static const Color textColor =Color(0xFF45465b);
   static const Color hintTextColor = Color(0xFF828ea3);
 
@@ -45,7 +45,7 @@ class AppColor {
 
   static const Color blue = Color(0xFF40BEFE);
   static const Color deepBlue = Color(0xFF2B1365);
-  static const Color cardBg = Color(0xFF7d92b0);
+  static const Color cardBg = Color(0xFFB5C0D0);
 
 
 

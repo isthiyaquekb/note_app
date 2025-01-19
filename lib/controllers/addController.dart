@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:note_app/controllers/dashboard_controller.dart';
 import 'package:note_app/core/app_color.dart';
 import 'package:note_app/model/notes_model.dart';
+import 'package:note_app/model/tag_category_model.dart';
 import 'package:note_app/model/tags_model.dart';
 
 class AddController extends GetxController{
@@ -32,6 +33,7 @@ class AddController extends GetxController{
 
   //LIST
   var tagList = <TagsModel>[].obs;
+  var tagCategoryList = <TagCategoryModel>[].obs;
   //FIRESTORE DECLARED
   FirebaseFirestore? firestore;
   FirebaseAuth? auth;
@@ -43,23 +45,16 @@ class AddController extends GetxController{
     userId=auth!.currentUser!.uid;
     nameController.text = "";
     contentController.text = "";
-    tagList.value=[
-      TagsModel(id: 1,tagName: "Rain", isSelectedTag: isSelected.value),
-      TagsModel(id: 2,tagName: "inspiration", isSelectedTag: isSelected.value),
-      TagsModel(id: 3,tagName: "love", isSelectedTag: isSelected.value),
-      TagsModel(id: 4,tagName: "health", isSelectedTag: isSelected.value),
-      TagsModel(id: 5,tagName: "motivation", isSelectedTag: isSelected.value),
-      TagsModel(id: 6,tagName: "self love", isSelectedTag: isSelected.value),
-      TagsModel(id: 7,tagName: "Mental Health", isSelectedTag: isSelected.value),
-    ];
+    tagList.clear();
+    getTagCategoryList();
     super.onInit();
   }
 
   @override
   void dispose() {
     super.dispose();
-    nameController.dispose();
-    contentController.dispose();
+    // nameController.dispose();
+    // contentController.dispose();
   }
 
   String? nameValidator(String value) {
@@ -132,5 +127,70 @@ class AddController extends GetxController{
         colorText: AppColor.black,
       );
     }
+  }
+  
+  void getTagCategoryList()async{
+    final categoryRef = firestore!.collection("poem-category");
+    final querySnapshot = await categoryRef.get();
+    tagCategoryList.clear();
+    log("QUERY SNAPSHOT OF POEM CATEGORY: ${querySnapshot.docs}");
+    for (var itemDocument in querySnapshot.docs) {
+      log("DOCUMENT POEM CATEGORY: ${itemDocument.data()}");
+
+      // Access the document data
+      var documentData = itemDocument.data();
+
+      // Create an initial model without tags
+      var tagCategory = TagCategoryModel.fromMap(documentData);
+
+      // Fetch the tags subcollection
+      var tagsSnapshot = await itemDocument.reference.collection("tags").get();
+      var tags = tagsSnapshot.docs.map((tagDoc) {
+        return TagsModel.fromMap(tagDoc.data(),tagDoc.id);
+      }).toList();
+
+      // Add tags to the model
+      var tagCategoryWithTags = tagCategory.copyWithTags(tags);
+
+      // Log and add to the list
+      log("TAG CATEGORY NAME: ${tagCategoryWithTags.name}");
+      log("TAGS COUNT: ${tagCategoryWithTags.tags.length}");
+      tagCategoryList.add(tagCategoryWithTags);
+    }
+
+    update();
+  }
+
+  void tagSelectedUpdate(String categoryId,String docId, bool isSelectedTag) async {
+    final tagRef = firestore!
+        .collection("poem-category")
+        .doc(categoryId) // Category ID
+        .collection("tags")
+        .doc(docId); // Tag ID
+
+    log("TAG REF:${tagRef.id}");
+
+    try {
+      // Update Firestore
+      await tagRef.update({"isSelectedTag": !isSelectedTag});
+      log("Tag updated successfully.");
+      getTagCategoryList();
+      // Optionally refresh the UI or local state
+      update();
+    } catch (error) {
+      log("Error updating tag: $error");
+    }
+
+  }
+
+  void getTagList(){
+    for (var elementCategory in tagCategoryList) {
+      for (var element in elementCategory.tags) {
+        if(element.isSelectedTag){
+          tagList.add(element);
+        }
+      }
+    }
+    update();
   }
 }

@@ -33,6 +33,7 @@ class AppAssets {
   static const String heartUnfilled = "assets/images/heart_unfilled.svg";
   static const String hashTagAdd = "assets/images/hashtag_add.svg";
   static const String galleryAdd = "assets/images/gallery_add.svg";
+  static const String deleteIcon = "assets/images/delete_icon.svg";
 
   //DUMMY
   static const String dummyDp = "assets/images/dummy_dp.png";
@@ -45,6 +46,7 @@ class AppAssets {
 
   //LOTTIE
   static const String notFound = "assets/lottie/not_found.json";
+  static const String bookLoading = "assets/lottie/book_loading.json";
 
   //PROFILE PLACEHOLDER
   static const String accountPlaceHolder =

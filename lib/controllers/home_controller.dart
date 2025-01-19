@@ -96,12 +96,13 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
       firestore!.collection("Notes").doc(documentId).update({
          "isFavourite":!note.isFavourite
        });
+       log("UPDATED ${note.title} ${index} ${note.content}");
+       getAllNotes();
       });
 
     }catch(error, stackTrace){
       log("Error $error, $stackTrace");
     }
-    return null;
   }
 
   //GET ALL PINNED NOTES

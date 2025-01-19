@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:note_app/model/tags_model.dart';
-import 'package:note_app/model/user_model.dart';
 
 class NotesModel {
   final String? id;
@@ -28,7 +27,7 @@ class NotesModel {
       id : json['id'],
       title :json['title'],
       content :json['content'],
-      tags : List<TagsModel>.from(json["tags"].map((x) => TagsModel.fromMap(x))),
+      tags : List<TagsModel>.from(json["tags"].map((x) => TagsModel.fromMap(x,""))),
       isFavourite:json['isFavourite']??false,
       createdTime:json['created'],
       updateTime:json['update'],

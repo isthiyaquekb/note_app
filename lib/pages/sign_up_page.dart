@@ -25,13 +25,13 @@ class SignUpPage extends StatelessWidget {
               Center(
                 child: Text(
                   "Note App",
-                  style: AppTheme.darkTheme.textTheme.labelLarge,
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
               ),
               Center(
                 child: Text(
                   "Lets store something daily",
-                  style: AppTheme.lightTheme.textTheme.labelMedium,
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
               const SizedBox(
@@ -44,10 +44,7 @@ class SignUpPage extends StatelessWidget {
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
                   onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                  style: const TextStyle(
-                      color: AppColor.textColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.labelMedium,
                   decoration: InputDecoration(
                     labelText: "First name",
                     labelStyle: const TextStyle(
@@ -91,10 +88,7 @@ class SignUpPage extends StatelessWidget {
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
                   onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                  style: const TextStyle(
-                      color: AppColor.textColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.labelMedium,
                   decoration: InputDecoration(
                     labelText: "Last name",
                     labelStyle: const TextStyle(
@@ -138,10 +132,7 @@ class SignUpPage extends StatelessWidget {
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   onEditingComplete: () => FocusScope.of(context).nextFocus(),
-                  style: const TextStyle(
-                      color: AppColor.textColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.labelMedium,
                   decoration: InputDecoration(
                     labelText: "Email",
                     labelStyle: const TextStyle(
@@ -187,10 +178,7 @@ class SignUpPage extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                     onEditingComplete: () => FocusScope.of(context).unfocus(),
-                    style: const TextStyle(
-                        color: AppColor.textColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400),
+                    style: Theme.of(context).textTheme.labelMedium,
                     decoration: InputDecoration(
                       labelText: "Password",
                       labelStyle: const TextStyle(
@@ -256,7 +244,7 @@ class SignUpPage extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "Sign up",
-                      style: AppTheme.darkTheme.textTheme.displayMedium,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ),
                 ),
@@ -272,7 +260,7 @@ class SignUpPage extends StatelessWidget {
                   child: RichText(
                       text: TextSpan(
                           text: 'Already have an account?',
-                          style: AppTheme.lightTheme.textTheme.displaySmall,children: const [
+                          style: Theme.of(context).textTheme.displaySmall,children: const [
                         TextSpan(text: ' Login', style: TextStyle(color: AppColor.accentColor, fontSize: 14)
                         )
                       ]

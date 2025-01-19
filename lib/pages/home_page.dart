@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,10 +9,9 @@ import 'package:note_app/controllers/home_controller.dart';
 import 'package:note_app/core/app_assets.dart';
 import 'package:note_app/core/app_color.dart';
 import 'package:note_app/core/app_theme.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -60,9 +58,9 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Hi Good Morning",
-                            style: AppTheme.darkTheme.textTheme.displaySmall),
+                          style: Theme.of(context).textTheme.displaySmall,),
                         Text("Isthiyaque",
-                            style: AppTheme.darkTheme.textTheme.displayMedium),
+                          style: Theme.of(context).textTheme.displayMedium),
                       ],
                     ),
                   )
@@ -80,7 +78,7 @@ class _HomePageState extends State<HomePage> {
             child: TabBar(
               indicatorSize: TabBarIndicatorSize.tab,
               indicator: BoxDecoration(
-                  color: AppColor.primaryColor,
+                  color: AppColor.accentColor,
                   borderRadius: BorderRadius.circular(6)),
               indicatorColor: Colors.transparent,
               labelColor: AppColor.black,
@@ -170,11 +168,9 @@ class _HomePageState extends State<HomePage> {
                                                           snapshot
                                                               .data![index]
                                                               .title,
-                                                          style: AppTheme
-                                                              .darkTheme
-                                                              .textTheme
-                                                              .displayLarge,
+                                                          style: Theme.of(context).textTheme.displayLarge,
                                                         ),
+
                                                         Flexible(
                                                           child: Wrap(
                                                             children:
@@ -182,8 +178,6 @@ class _HomePageState extends State<HomePage> {
                                                                 .data![
                                                             index]
                                                                 .tags
-                                                                .asMap()
-                                                                .entries
                                                                 .map(
                                                                   (e) =>
                                                                   Container(
@@ -201,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                                                                       const EdgeInsets.all(8.0),
                                                                       child:
                                                                       Text(
-                                                                        '#${e.value.tagName}',
+                                                                        '#${e.tagName}',
                                                                         style: AppTheme.darkTheme.textTheme.bodySmall,
                                                                       ),
                                                                     ),

@@ -197,6 +197,8 @@ class AuthController extends GetxController {
       isLoading.value=false;
     } on FirebaseAuthException catch (e) {
       isLoading.value=false;
+      storageBox.write(AppKeys.keyIsLogged, true);
+      Get.showSnackbar(const GetSnackBar(title: "Error",messageText: Text("The password is invalid or the user does not have a password."),backgroundColor: AppColor.cardBg,dismissDirection: DismissDirection.startToEnd,duration: Duration(milliseconds: 250),padding: EdgeInsets.symmetric(horizontal: 18.0),));
       throw e.stackTrace.toString();
     } catch (e) {
       isLoading.value=false;
